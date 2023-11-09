@@ -2,7 +2,7 @@
 //  SampleViewController
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/08.
+//  Created by Akira Matsuda on 2023/11/09.
 //
 
 import CollectionComposer
@@ -16,7 +16,7 @@ protocol SampleViewInput: ComposedViewInput {
 
 final class SampleViewController: ComposedCollectionViewController, SectionProvider {
     // MARK: VIPER property
-    var presenter: SamplePresenterInput!
+    var presenter: (any SamplePresenterInput)!
 
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = presenter
     var sections: [any CollectionComposer.Section] {
@@ -25,7 +25,6 @@ final class SampleViewController: ComposedCollectionViewController, SectionProvi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Sample"
         provider = self
         presenter.viewDidLoad()
     }

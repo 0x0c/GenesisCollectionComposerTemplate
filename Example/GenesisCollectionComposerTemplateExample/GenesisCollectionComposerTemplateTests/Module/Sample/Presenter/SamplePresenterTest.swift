@@ -2,7 +2,7 @@
 //  SamplePresenterTest
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/08.
+//  Created by Akira Matsuda on 2023/11/09.
 //
 
 @testable import GenesisCollectionComposerTemplateExample

@@ -2,7 +2,7 @@
 //  SampleInteractor
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/08.
+//  Created by Akira Matsuda on 2023/11/09.
 //
 
 import CollectionComposer
@@ -17,12 +17,13 @@ protocol SampleInteractorInput: SampleInteractorInputInterface {
 
 protocol SampleInteractorOutput: AnyObject {
     // MARK: Callback methods for presenter
+    func storeSections(_ sections: [any CollectionComposer.Section])
 }
 
 final class SampleInteractor {
 
     // MARK: VIPER property
-    weak var presenter: SampleInteractorOutput!
+    weak var presenter: (any SampleInteractorOutput)!
 
     init() {}
 
@@ -31,23 +32,7 @@ final class SampleInteractor {
 
 extension SampleInteractor: SampleInteractorInput {
     func makeSections() -> [any Section] {
-        return [
-            ListSection(id: "first", apperarance: .plain) {
-                ListItem(text: "Item 1")
-                ListItem(text: "Item 2")
-                ListItem(text: "Item 3")
-                ListItem(text: "Item 4")
-                ListItem(text: "Item 5")
-            }.header(.plain("Header"))
-                .footer(.plain("Footer")),
-            ListSection(id: "second", apperarance: .insetGrouped) {
-                ListItem(text: "Item 1", secondaryText: "Seconday")
-                ListItem(text: "Item 2", secondaryText: "Seconday")
-                ListItem(text: "Item 3", secondaryText: "Seconday")
-                ListItem(text: "Item 4", secondaryText: "Seconday")
-                ListItem(text: "Item 5", secondaryText: "Seconday")
-            }.header(.plain("Expandable Header", isExpandable: true))
-                .footer(.plain("Footer"))
-        ]
+        // TODO: Return array of CollectionComposer.Section to show on the view.
+        return []
     }
 }

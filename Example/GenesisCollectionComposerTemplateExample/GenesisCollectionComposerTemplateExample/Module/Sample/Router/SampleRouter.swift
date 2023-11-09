@@ -2,7 +2,7 @@
 //  SampleRouter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/08.
+//  Created by Akira Matsuda on 2023/11/09.
 //
 
 import UIKit

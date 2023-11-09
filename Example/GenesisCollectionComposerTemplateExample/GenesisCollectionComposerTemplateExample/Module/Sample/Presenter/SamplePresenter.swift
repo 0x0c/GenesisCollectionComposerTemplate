@@ -2,7 +2,7 @@
 //  SamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/08.
+//  Created by Akira Matsuda on 2023/11/09.
 //
 
 import CollectionComposer
@@ -22,13 +22,13 @@ protocol SamplePresenterInput: SamplePresenterInputInterface, SectionDataSource 
 
 final class SamplePresenter {
     // MARK: VIPER properties
-    weak var view: SampleViewInput!
-    var interactor: SampleInteractorInput!
-    var router: SampleRouterInput!
+    weak var view: (any SampleViewInput)!
+    var interactor: (any SampleInteractorInput)!
+    var router: (any SampleRouterInput)!
 
     private(set) var sections = [any CollectionComposer.Section]()
 
-    init(view: SampleViewInput, interactor: SampleInteractorInput, router: SampleRouterInput) {
+    init(view: SampleViewInput, interactor: any SampleInteractorInput, router: SampleRouterInput) {
         self.view = view
         self.interactor = interactor
         self.router = router
@@ -43,25 +43,15 @@ final class SamplePresenter {
 
 extension SamplePresenter: SamplePresenterInput {
     func viewDidLoad() {
-        store(interactor.makeSections())
+        // Do any additional setup after loading the view.
     }
 
     func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
         // Handle item selection
-        switch section {
-        case is ListSection:
-            guard let item = item as? ListItem else {
-                return
-            }
-            print("List \(item.id)")
-        default:
-            break
-        }
     }
 
     func storeSections(_ sections: [any CollectionComposer.Section]) {
         store(sections)
-    }
-}
+    }}
 
 extension SamplePresenter: SampleInteractorOutput {}
