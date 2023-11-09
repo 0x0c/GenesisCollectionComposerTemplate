@@ -19,6 +19,11 @@
 		E9F2ACB02AFB760F0005E9BD /* SampleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACAB2AFB760F0005E9BD /* SampleInteractor.swift */; };
 		E9F2ACB12AFB760F0005E9BD /* SampleRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACAD2AFB760F0005E9BD /* SampleRouter.swift */; };
 		E9F2ACB42AFBCB030005E9BD /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACB32AFBCB030005E9BD /* ListItem.swift */; };
+		E9F2ACBE2AFCC3540005E9BD /* FetchableSamplePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACB72AFCC3540005E9BD /* FetchableSamplePresenter.swift */; };
+		E9F2ACBF2AFCC3540005E9BD /* FetchableSampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACB92AFCC3540005E9BD /* FetchableSampleViewController.swift */; };
+		E9F2ACC02AFCC3540005E9BD /* FetchableSampleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACBB2AFCC3540005E9BD /* FetchableSampleInteractor.swift */; };
+		E9F2ACC12AFCC3540005E9BD /* FetchableSampleRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACBD2AFCC3540005E9BD /* FetchableSampleRouter.swift */; };
+		E9F2ACC42AFCD71A0005E9BD /* FetchableSampleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2ACC32AFCD71A0005E9BD /* FetchableSampleRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +40,11 @@
 		E9F2ACAB2AFB760F0005E9BD /* SampleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleInteractor.swift; sourceTree = "<group>"; };
 		E9F2ACAD2AFB760F0005E9BD /* SampleRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleRouter.swift; sourceTree = "<group>"; };
 		E9F2ACB32AFBCB030005E9BD /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
+		E9F2ACB72AFCC3540005E9BD /* FetchableSamplePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchableSamplePresenter.swift; sourceTree = "<group>"; };
+		E9F2ACB92AFCC3540005E9BD /* FetchableSampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchableSampleViewController.swift; sourceTree = "<group>"; };
+		E9F2ACBB2AFCC3540005E9BD /* FetchableSampleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchableSampleInteractor.swift; sourceTree = "<group>"; };
+		E9F2ACBD2AFCC3540005E9BD /* FetchableSampleRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchableSampleRouter.swift; sourceTree = "<group>"; };
+		E9F2ACC32AFCD71A0005E9BD /* FetchableSampleRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchableSampleRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +94,7 @@
 		E9F2ACA42AFB760F0005E9BD /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				E9F2ACB52AFCC3540005E9BD /* FetchableSample */,
 				E9F2ACA52AFB760F0005E9BD /* Sample */,
 			);
 			path = Module;
@@ -138,6 +149,58 @@
 				E9F2ACB32AFBCB030005E9BD /* ListItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E9F2ACB52AFCC3540005E9BD /* FetchableSample */ = {
+			isa = PBXGroup;
+			children = (
+				E9F2ACC22AFCD71A0005E9BD /* Repository */,
+				E9F2ACB62AFCC3540005E9BD /* Presenter */,
+				E9F2ACB82AFCC3540005E9BD /* View */,
+				E9F2ACBA2AFCC3540005E9BD /* Interactor */,
+				E9F2ACBC2AFCC3540005E9BD /* Router */,
+			);
+			path = FetchableSample;
+			sourceTree = "<group>";
+		};
+		E9F2ACB62AFCC3540005E9BD /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				E9F2ACB72AFCC3540005E9BD /* FetchableSamplePresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		E9F2ACB82AFCC3540005E9BD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E9F2ACB92AFCC3540005E9BD /* FetchableSampleViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E9F2ACBA2AFCC3540005E9BD /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				E9F2ACBB2AFCC3540005E9BD /* FetchableSampleInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		E9F2ACBC2AFCC3540005E9BD /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				E9F2ACBD2AFCC3540005E9BD /* FetchableSampleRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		E9F2ACC22AFCD71A0005E9BD /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				E9F2ACC32AFCD71A0005E9BD /* FetchableSampleRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,14 +280,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9F2ACC02AFCC3540005E9BD /* FetchableSampleInteractor.swift in Sources */,
 				E9F2ACAF2AFB760F0005E9BD /* SampleViewController.swift in Sources */,
 				E9F2AC922AFB73CD0005E9BD /* ViewController.swift in Sources */,
 				E9F2AC8E2AFB73CD0005E9BD /* AppDelegate.swift in Sources */,
+				E9F2ACBE2AFCC3540005E9BD /* FetchableSamplePresenter.swift in Sources */,
 				E9F2ACB12AFB760F0005E9BD /* SampleRouter.swift in Sources */,
+				E9F2ACBF2AFCC3540005E9BD /* FetchableSampleViewController.swift in Sources */,
+				E9F2ACC42AFCD71A0005E9BD /* FetchableSampleRepository.swift in Sources */,
 				E9F2ACB42AFBCB030005E9BD /* ListItem.swift in Sources */,
 				E9F2ACAE2AFB760F0005E9BD /* SamplePresenter.swift in Sources */,
 				E9F2ACB02AFB760F0005E9BD /* SampleInteractor.swift in Sources */,
 				E9F2AC902AFB73CD0005E9BD /* SceneDelegate.swift in Sources */,
+				E9F2ACC12AFCC3540005E9BD /* FetchableSampleRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

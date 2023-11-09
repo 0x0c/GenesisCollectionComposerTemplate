@@ -21,36 +21,45 @@ protocol {{ module_name }}InteractorInput: {{ module_name }}InteractorInputInter
 
 protocol {{ module_name }}InteractorOutput: AnyObject {
     // MARK: Callback methods for presenter
+    func storeSections(_ sections: [any CollectionComposer.Section])
 }
 
+{% if has_repository %}
+final class {{ module_name }}Interactor<Repository: {{ module_name }}RepositoryInterface> {
+    var repository: Repository
+{% else %}
 final class {{ module_name }}Interactor {
-{% if has_repository -%}
-    typealias Repository = {{ module_name }}RepositoryInterface
 {% endif %}
 
     // MARK: VIPER property
-    weak var presenter: {{ module_name }}InteractorOutput!
+    weak var presenter: (any {{ module_name }}InteractorOutput)!
 
+{% if has_repository %}
+    init(repository: Repository) {
+        self.repository = repository
+    }
+{% else %}
     init() {}
+{% endif %}
 
     // MARK: Other private methods
 }
 
 extension {{ module_name }}Interactor: {{ module_name }}InteractorInput {
 {% if has_repository %}
-    @discardableResult
     func fetch(force: Bool) async throws {
         let result = try await repository.fetch(force: force)
-        presenter.updateSections(makeSections(for: result))
+        presenter.storeSections(makeSections(for: result))
     }
 
-    func makeSections(for entity: Repository.Entity) -> [any CollectionComposer.Section]{
+    func makeSections(for entity: Repository.Entity) -> [any CollectionComposer.Section] {
         // TODO: Convert entity to CollectionComposer.Section.
+        return []
     }
 {% else %}
     func makeSections() -> [any Section] {
         // TODO: Return array of CollectionComposer.Section to show on the view.
         return []
     }
-}
 {% endif %}
+}

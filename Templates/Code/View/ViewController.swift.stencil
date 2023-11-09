@@ -16,7 +16,7 @@ protocol {{ module_name }}ViewInput: ComposedViewInput {
 
 final class {{ module_name }}ViewController: ComposedCollectionViewController, SectionProvider {
     // MARK: VIPER property
-    var presenter: {{ module_name }}PresenterInput!
+    var presenter: (any {{ module_name }}PresenterInput)!
 
     lazy var sectionDataSource: CollectionComposer.SectionDataSource = presenter
     var sections: [any CollectionComposer.Section] {

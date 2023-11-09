@@ -1,22 +1,18 @@
 //
-//  {{ module_name }}Presenter
-//  {{ project_name }}
+//  FetchableSamplePresenter
+//  GenesisCollectionComposerTemplateExample
 //
-//  Created by {{ developer_name }} on {{ date }}.
+//  Created by Akira Matsuda on 2023/11/09.
 //
 
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
-{% if has_repository %}
-typealias {{ module_name }}PresenterInputInterface = ComposedViewFetchablePresenterInput
-{% else %}
-typealias {{ module_name }}PresenterInputInterface = ComposedViewPresenterInput
-{% endif %}
+typealias FetchableSamplePresenterInputInterface = ComposedViewFetchablePresenterInput
 
 @MainActor
-protocol {{ module_name }}PresenterInput: {{ module_name }}PresenterInputInterface, SectionDataSource {
+protocol FetchableSamplePresenterInput: FetchableSamplePresenterInputInterface, SectionDataSource {
     // MARK: View Life-Cycle methods
 
     func viewDidLoad()
@@ -24,18 +20,16 @@ protocol {{ module_name }}PresenterInput: {{ module_name }}PresenterInputInterfa
     // MARK: Other methods called from View
 }
 
-final class {{ module_name }}Presenter {
+final class FetchableSamplePresenter {
     // MARK: VIPER properties
-    weak var view: (any {{ module_name }}ViewInput)!
-    var interactor: (any {{ module_name }}InteractorInput)!
-    var router: (any {{ module_name }}RouterInput)!
+    weak var view: (any FetchableSampleViewInput)!
+    var interactor: (any FetchableSampleInteractorInput)!
+    var router: (any FetchableSampleRouterInput)!
 
     private(set) var sections = [any CollectionComposer.Section]()
-{% if has_repository %}
     @Published var isLoading = false
-{% endif %}
 
-    init(view: {{ module_name }}ViewInput, interactor: any {{ module_name }}InteractorInput, router: {{ module_name }}RouterInput) {
+    init(view: FetchableSampleViewInput, interactor: any FetchableSampleInteractorInput, router: FetchableSampleRouterInput) {
         self.view = view
         self.interactor = interactor
         self.router = router
@@ -48,12 +42,10 @@ final class {{ module_name }}Presenter {
     }
 }
 
-extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
-{% if has_repository %}
+extension FetchableSamplePresenter: FetchableSamplePresenterInput {
     var isLoadingPublisher: Published<Bool>.Publisher {
         return $isLoading
     }
-{% endif %}
     func viewDidLoad() {
         // Do any additional setup after loading the view.
     }
@@ -65,8 +57,6 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
     func storeSections(_ sections: [any CollectionComposer.Section]) {
         store(sections)
     }
-
-{%- if has_repository +%}
     func fetch(force: Bool) {
         Task { [weak view] in
             isLoading = true
@@ -79,7 +69,6 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
             isLoading = false
         }
     }
-{% endif %}
 }
 
-extension {{ module_name }}Presenter: {{ module_name }}InteractorOutput {}
+extension FetchableSamplePresenter: FetchableSampleInteractorOutput {}
