@@ -1,0 +1,17 @@
+//
+//  {{ module_name }}Repository
+//  {{ project_name }}
+//
+//  Created by {{ developer_name }} on {{ date }}.
+//
+
+import CollectionComposer
+
+final class {{ module_name }}Repository: ComposedViewRepositoryInterface {
+    typealiase Entity = // TODO:
+
+    func fetch(force: Bool) async throws -> [Entity] {
+        // TODO: 
+        return []
+    }
+}

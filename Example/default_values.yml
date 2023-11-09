@@ -1,0 +1,4 @@
+developer_name: Akira Matsuda
+project_name: GenesisCollectionComposerTemplateExample
+output_path: ./GenesisCollectionComposerTemplateExample/GenesisCollectionComposerTemplateExample/Module
+test_output_path: ./GenesisCollectionComposerTemplateExample/GenesisCollectionComposerTemplateTests/Module

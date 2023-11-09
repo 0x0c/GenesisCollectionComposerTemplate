@@ -1,0 +1,56 @@
+//
+//  {{ module_name }}Interactor
+//  {{ project_name }}
+//
+//  Created by {{ developer_name }} on {{ date }}.
+//
+
+import CollectionComposer
+import CollectionComposerVIPERExtension
+import Foundation
+
+{% if has_repository %}
+typealias {{ module_name }}InteractorInputInterface = ComposedViewFetchableInteractorInput
+{% else %}
+typealias {{ module_name }}InteractorInputInterface = ComposedViewInteractorInput
+{% endif %}
+
+protocol {{ module_name }}InteractorInput: {{ module_name }}InteractorInputInterface {
+    // MARK: Methods called from presenter
+}
+
+protocol {{ module_name }}InteractorOutput: AnyObject {
+    // MARK: Callback methods for presenter
+}
+
+final class {{ module_name }}Interactor {
+{% if has_repository -%}
+    typealias Repository = {{ module_name }}RepositoryInterface
+{% endif %}
+
+    // MARK: VIPER property
+    weak var presenter: {{ module_name }}InteractorOutput!
+
+    init() {}
+
+    // MARK: Other private methods
+}
+
+extension {{ module_name }}Interactor: {{ module_name }}InteractorInput {
+{% if has_repository %}
+    @discardableResult
+    func fetch(force: Bool) async throws {
+        let result = try await repository.fetch(force: force)
+        presenter.updateSections(makeSections(for: result))
+    }
+
+    func makeSections(for entity: Repository.Entity) -> [any CollectionComposer.Section]{
+        // TODO: Convert entity to CollectionComposer.Section.
+    }
+{% else %}
+    func makeSections() -> [any Section] {
+        // TODO: Return array of CollectionComposer.Section to show on the view.
+        return []
+    }
+}
+{% endif %}
