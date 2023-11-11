@@ -65,8 +65,7 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
     func storeSections(_ sections: [any CollectionComposer.Section]) {
         store(sections)
     }
-
-{%- if has_repository +%}
+{%+ if has_repository %}
     func fetch(force: Bool) {
         Task { [weak view] in
             isLoading = true
