@@ -56,6 +56,11 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
 {% endif %}
     func viewDidLoad() {
         // Do any additional setup after loading the view.
+{% if has_repository %}
+        fetch(force: true)
+{% else %}
+        storeSections(interactor.makeSections())
+{% endif %}
     }
 
     func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
