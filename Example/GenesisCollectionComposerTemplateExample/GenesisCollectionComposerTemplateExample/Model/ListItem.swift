@@ -9,6 +9,8 @@ import CollectionComposer
 import UIKit
 
 public struct ListItem: ListCellConfigurable {
+    public var isHighlightable: Bool = false
+    
     // MARK: Lifecycle
 
     public init(id: String = UUID().uuidString, image: UIImage? = nil, text: String? = nil, attributedText: NSAttributedString? = nil, secondaryText: String? = nil, secondaryAttributedText: NSAttributedString? = nil, accessories: [UICellAccessory]? = nil) {

@@ -2,22 +2,19 @@
 //  SampleInteractor
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/11.
+//  Created by Akira Matsuda on 2024/01/18.
 //
 
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
-typealias SampleInteractorInputInterface = ComposedViewInteractorInput
-
-protocol SampleInteractorInput: SampleInteractorInputInterface {
+protocol SampleInteractorInput {
     // MARK: Methods called from presenter
 }
 
-protocol SampleInteractorOutput: AnyObject {
+protocol SampleInteractorOutput: ComposedViewInteractorOutput {
     // MARK: Callback methods for presenter
-    func storeSections(_ sections: [any CollectionComposer.Section])
 }
 
 final class SampleInteractor {
@@ -31,8 +28,4 @@ final class SampleInteractor {
 }
 
 extension SampleInteractor: SampleInteractorInput {
-    func makeSections() -> [any Section] {
-        // TODO: Return array of CollectionComposer.Section to show on the view.
-        return []
-    }
 }

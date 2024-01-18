@@ -2,7 +2,7 @@
 //  SamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/11.
+//  Created by Akira Matsuda on 2024/01/18.
 //
 
 import CollectionComposer
@@ -44,15 +44,23 @@ final class SamplePresenter {
 extension SamplePresenter: SamplePresenterInput {
     func viewDidLoad() {
         // Do any additional setup after loading the view.
+        updateSections()
     }
 
     func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
         // Handle item selection
     }
-
-    func storeSections(_ sections: [any CollectionComposer.Section]) {
-        store(sections)
-    }
 }
 
-extension SamplePresenter: SampleInteractorOutput {}
+extension SamplePresenter: SampleInteractorOutput {
+    func updateSections() {
+        // TODO: Store specific sections to update view
+        store([
+            ListSection {
+                ListItem(id: UUID().uuidString, text: "Test1")
+                ListItem(id: UUID().uuidString, text: "Test2")
+                ListItem(id: UUID().uuidString, text: "Test3")
+            }
+        ])
+    }
+}

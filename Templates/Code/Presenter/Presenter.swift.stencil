@@ -59,16 +59,12 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
 {% if has_repository %}
         fetch(force: true)
 {% else %}
-        storeSections(interactor.makeSections())
+        updateSections()
 {% endif %}
     }
 
     func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
         // Handle item selection
-    }
-
-    func storeSections(_ sections: [any CollectionComposer.Section]) {
-        store(sections)
     }
 {%+ if has_repository %}
     func fetch(force: Bool) {
@@ -86,4 +82,9 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
 {% endif %}
 }
 
-extension {{ module_name }}Presenter: {{ module_name }}InteractorOutput {}
+extension {{ module_name }}Presenter: {{ module_name }}InteractorOutput {
+    func updateSections() {
+        // TODO: Store specific sections to update view
+        store([])
+    }
+}

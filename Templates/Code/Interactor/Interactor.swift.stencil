@@ -10,18 +10,15 @@ import CollectionComposerVIPERExtension
 import Foundation
 
 {% if has_repository %}
-typealias {{ module_name }}InteractorInputInterface = ComposedViewFetchableInteractorInput
+protocol {{ module_name }}InteractorInput: ComposedViewFetchableInteractorInput {
 {% else %}
-typealias {{ module_name }}InteractorInputInterface = ComposedViewInteractorInput
+protocol {{ module_name }}InteractorInput {
 {% endif %}
-
-protocol {{ module_name }}InteractorInput: {{ module_name }}InteractorInputInterface {
     // MARK: Methods called from presenter
 }
 
-protocol {{ module_name }}InteractorOutput: AnyObject {
+protocol {{ module_name }}InteractorOutput: ComposedViewInteractorOutput {
     // MARK: Callback methods for presenter
-    func storeSections(_ sections: [any CollectionComposer.Section])
 }
 
 {% if has_repository %}
@@ -49,17 +46,7 @@ extension {{ module_name }}Interactor: {{ module_name }}InteractorInput {
 {% if has_repository %}
     func fetch(force: Bool) async throws {
         let result = try await repository.fetch(force: force)
-        presenter.storeSections(makeSections(for: result))
-    }
-
-    func makeSections(for entity: Repository.Entity) -> [any CollectionComposer.Section] {
-        // TODO: Convert entity to CollectionComposer.Section.
-        return []
-    }
-{% else %}
-    func makeSections() -> [any Section] {
-        // TODO: Return array of CollectionComposer.Section to show on the view.
-        return []
+        await presenter.updateSections()
     }
 {% endif %}
 }

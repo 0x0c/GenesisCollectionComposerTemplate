@@ -2,7 +2,7 @@
 //  FetchableSamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/09.
+//  Created by Akira Matsuda on 2024/01/18.
 //
 
 import CollectionComposer
@@ -48,15 +48,13 @@ extension FetchableSamplePresenter: FetchableSamplePresenterInput {
     }
     func viewDidLoad() {
         // Do any additional setup after loading the view.
+        fetch(force: true)
     }
 
     func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
         // Handle item selection
     }
 
-    func storeSections(_ sections: [any CollectionComposer.Section]) {
-        store(sections)
-    }
     func fetch(force: Bool) {
         Task { [weak view] in
             isLoading = true
@@ -71,4 +69,8 @@ extension FetchableSamplePresenter: FetchableSamplePresenterInput {
     }
 }
 
-extension FetchableSamplePresenter: FetchableSampleInteractorOutput {}
+extension FetchableSamplePresenter: FetchableSampleInteractorOutput {
+    func updateSections() {
+        store([])
+    }
+}

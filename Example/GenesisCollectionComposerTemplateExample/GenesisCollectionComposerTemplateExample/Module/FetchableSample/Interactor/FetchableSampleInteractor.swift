@@ -2,22 +2,19 @@
 //  FetchableSampleInteractor
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/09.
+//  Created by Akira Matsuda on 2024/01/18.
 //
 
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
-typealias FetchableSampleInteractorInputInterface = ComposedViewFetchableInteractorInput
-
-protocol FetchableSampleInteractorInput: FetchableSampleInteractorInputInterface {
+protocol FetchableSampleInteractorInput: ComposedViewFetchableInteractorInput {
     // MARK: Methods called from presenter
 }
 
-protocol FetchableSampleInteractorOutput: AnyObject {
+protocol FetchableSampleInteractorOutput: ComposedViewInteractorOutput {
     // MARK: Callback methods for presenter
-    func storeSections(_ sections: [any CollectionComposer.Section])
 }
 
 final class FetchableSampleInteractor<Repository: FetchableSampleRepositoryInterface> {
@@ -36,11 +33,6 @@ final class FetchableSampleInteractor<Repository: FetchableSampleRepositoryInter
 extension FetchableSampleInteractor: FetchableSampleInteractorInput {
     func fetch(force: Bool) async throws {
         let result = try await repository.fetch(force: force)
-        presenter.storeSections(makeSections(for: result))
-    }
-
-    func makeSections(for entity: Repository.Entity) -> [any CollectionComposer.Section] {
-        // TODO: Convert entity to CollectionComposer.Section.
-        return []
+        await presenter.updateSections()
     }
 }

@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/0x0c/CollectionComposer.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "42e28755f6d09aded75d853deb812bc1d0c66f8d"
+        "revision" : "4984c182a697c28b0d22b57ed74427b678c0cbb4",
+        "version" : "1.1.0"
       }
     },
     {
@@ -15,7 +15,7 @@
       "location" : "https://github.com/0x0c/CollectionComposerVIPERExtension",
       "state" : {
         "branch" : "main",
-        "revision" : "6294a1421a73d7436ab39fe61af25fedb4a1d1c7"
+        "revision" : "208306ec192040e02248d6d377dced3435bd59d5"
       }
     }
   ],

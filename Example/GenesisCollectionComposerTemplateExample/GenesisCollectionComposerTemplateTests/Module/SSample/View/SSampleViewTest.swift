@@ -2,7 +2,7 @@
 //  SSampleViewTests
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2023/11/08.
+//  Created by Akira Matsuda on 2024/01/18.
 //
 
 import XCTest
