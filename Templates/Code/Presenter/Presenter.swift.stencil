@@ -9,14 +9,16 @@ import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
-{% if has_repository %}
-typealias {{ module_name }}PresenterInputInterface = ComposedViewFetchablePresenterInput
-{% else %}
-typealias {{ module_name }}PresenterInputInterface = ComposedViewPresenterInput
-{% endif %}
+enum {{ module_name }}PresenterState {
+    // TODO: Add any states for view
+}
 
 @MainActor
-protocol {{ module_name }}PresenterInput: {{ module_name }}PresenterInputInterface, SectionDataSource {
+{% if has_repository %}
+protocol {{ module_name }}PresenterInput: ComposedViewFetchablePresenterInput {
+{% else %}
+protocol {{ module_name }}PresenterInput {
+{% endif %}
     // MARK: View Life-Cycle methods
 
     func viewDidLoad()
@@ -30,7 +32,6 @@ final class {{ module_name }}Presenter {
     var interactor: (any {{ module_name }}InteractorInput)!
     var router: (any {{ module_name }}RouterInput)!
 
-    private(set) var sections = [any CollectionComposer.Section]()
 {% if has_repository %}
     @Published var isLoading = false
 {% endif %}
@@ -40,12 +41,6 @@ final class {{ module_name }}Presenter {
         self.interactor = interactor
         self.router = router
     }
-
-    @MainActor
-    func store(_ sections: [any Section]) {
-        self.sections = sections
-        view?.updateSections(sections)
-    }
 }
 
 extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
@@ -53,20 +48,21 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
     var isLoadingPublisher: Published<Bool>.Publisher {
         return $isLoading
     }
+
 {% endif %}
     func viewDidLoad() {
         // Do any additional setup after loading the view.
+        view.updateSections(for: makeState())
 {% if has_repository %}
         fetch(force: true)
-{% else %}
-        updateSections()
 {% endif %}
     }
 
-    func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        // Handle item selection
+    private func makeState() -> {{ module_name }}PresenterState {
+        // TODO: Construct context from the entity
     }
-{%+ if has_repository %}
+{% if has_repository %}
+
     func fetch(force: Bool) {
         Task { [weak view] in
             isLoading = true
@@ -76,15 +72,11 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
             catch {
                 // TODO: handle error
             }
+            view?.updateSections(for: makeState())
             isLoading = false
         }
     }
 {% endif %}
 }
 
-extension {{ module_name }}Presenter: {{ module_name }}InteractorOutput {
-    func updateSections() {
-        // TODO: Store specific sections to update view
-        store([])
-    }
-}
+extension {{ module_name }}Presenter: {{ module_name }}InteractorOutput {}

@@ -2,7 +2,7 @@
 //  SampleInteractorTests
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/18.
+//  Created by Akira Matsuda on 2024/01/19.
 //
 
 @testable import GenesisCollectionComposerTemplateExample

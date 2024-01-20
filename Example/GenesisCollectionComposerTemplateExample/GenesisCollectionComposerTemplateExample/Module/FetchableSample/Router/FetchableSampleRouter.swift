@@ -2,7 +2,7 @@
 //  FetchableSampleRouter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/18.
+//  Created by Akira Matsuda on 2024/01/19.
 //
 
 import UIKit
@@ -20,14 +20,14 @@ final class FetchableSampleRouter {
         self.viewController = viewController
     }
 
-    static func assembleModule<Repository: FetchableSampleRepositoryInterface>(repository: Repository) -> FetchableSampleViewController {
+    static func assembleModule() -> FetchableSampleViewController {
         let view = FetchableSampleViewController()
         // TODO: Create a Storyboard with the same name as "FetchableSample".
         // TODO: And Change "FetchableSample" of "R.storyboard.FetchableSample" to lowercase.
         // guard let view = R.storyboard.FetchableSample.instantiateInitialViewController() else {
         //     fatalError("Fail to load FetchableSampleViewController from Storyboard.")
         // }
-        let interactor = FetchableSampleInteractor(repository: repository)
+        let interactor = FetchableSampleInteractor()
         let router = FetchableSampleRouter(viewController: view)
         let presenter = FetchableSamplePresenter(view: view, interactor: interactor, router: router)
 

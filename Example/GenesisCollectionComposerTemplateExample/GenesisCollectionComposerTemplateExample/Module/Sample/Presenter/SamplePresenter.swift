@@ -2,17 +2,19 @@
 //  SamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/18.
+//  Created by Akira Matsuda on 2024/01/19.
 //
 
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
-typealias SamplePresenterInputInterface = ComposedViewPresenterInput
+enum SamplePresenterState {
+    case initial(_ items: [ListItem])
+}
 
 @MainActor
-protocol SamplePresenterInput: SamplePresenterInputInterface, SectionDataSource {
+protocol SamplePresenterInput {
     // MARK: View Life-Cycle methods
 
     func viewDidLoad()
@@ -26,41 +28,23 @@ final class SamplePresenter {
     var interactor: (any SampleInteractorInput)!
     var router: (any SampleRouterInput)!
 
-    private(set) var sections = [any CollectionComposer.Section]()
 
     init(view: SampleViewInput, interactor: any SampleInteractorInput, router: SampleRouterInput) {
         self.view = view
         self.interactor = interactor
         self.router = router
     }
-
-    @MainActor
-    func store(_ sections: [any Section]) {
-        self.sections = sections
-        view?.updateSections(sections)
-    }
 }
 
 extension SamplePresenter: SamplePresenterInput {
     func viewDidLoad() {
         // Do any additional setup after loading the view.
-        updateSections()
+        view.updateSections(for: makeState())
     }
 
-    func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        // Handle item selection
+    private func makeState() -> SamplePresenterState {
+        return .initial([ListItem].mock())
     }
 }
 
-extension SamplePresenter: SampleInteractorOutput {
-    func updateSections() {
-        // TODO: Store specific sections to update view
-        store([
-            ListSection {
-                ListItem(id: UUID().uuidString, text: "Test1")
-                ListItem(id: UUID().uuidString, text: "Test2")
-                ListItem(id: UUID().uuidString, text: "Test3")
-            }
-        ])
-    }
-}
+extension SamplePresenter: SampleInteractorOutput {}

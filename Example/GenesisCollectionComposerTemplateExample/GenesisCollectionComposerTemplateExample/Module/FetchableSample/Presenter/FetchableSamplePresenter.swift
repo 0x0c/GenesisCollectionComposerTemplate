@@ -2,17 +2,21 @@
 //  FetchableSamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/18.
+//  Created by Akira Matsuda on 2024/01/19.
 //
 
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
-typealias FetchableSamplePresenterInputInterface = ComposedViewFetchablePresenterInput
+enum FetchableSamplePresenterState {
+    // TODO: Add any states for view
+    case loading
+    case fetched(_ items: [ListItem])
+}
 
 @MainActor
-protocol FetchableSamplePresenterInput: FetchableSamplePresenterInputInterface, SectionDataSource {
+protocol FetchableSamplePresenterInput: ComposedViewFetchablePresenterInput {
     // MARK: View Life-Cycle methods
 
     func viewDidLoad()
@@ -26,7 +30,6 @@ final class FetchableSamplePresenter {
     var interactor: (any FetchableSampleInteractorInput)!
     var router: (any FetchableSampleRouterInput)!
 
-    private(set) var sections = [any CollectionComposer.Section]()
     @Published var isLoading = false
 
     init(view: FetchableSampleViewInput, interactor: any FetchableSampleInteractorInput, router: FetchableSampleRouterInput) {
@@ -34,25 +37,24 @@ final class FetchableSamplePresenter {
         self.interactor = interactor
         self.router = router
     }
-
-    @MainActor
-    func store(_ sections: [any Section]) {
-        self.sections = sections
-        view?.updateSections(sections)
-    }
 }
 
 extension FetchableSamplePresenter: FetchableSamplePresenterInput {
     var isLoadingPublisher: Published<Bool>.Publisher {
         return $isLoading
     }
+
     func viewDidLoad() {
         // Do any additional setup after loading the view.
+        view.updateSections(for: makeState())
         fetch(force: true)
     }
 
-    func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        // Handle item selection
+    private func makeState() -> FetchableSamplePresenterState {
+        guard let items = interactor.storage else {
+            return .loading
+        }
+        return .fetched(items)
     }
 
     func fetch(force: Bool) {
@@ -64,13 +66,10 @@ extension FetchableSamplePresenter: FetchableSamplePresenterInput {
             catch {
                 // TODO: handle error
             }
+            view?.updateSections(for: makeState())
             isLoading = false
         }
     }
 }
 
-extension FetchableSamplePresenter: FetchableSampleInteractorOutput {
-    func updateSections() {
-        store([])
-    }
-}
+extension FetchableSamplePresenter: FetchableSampleInteractorOutput {}

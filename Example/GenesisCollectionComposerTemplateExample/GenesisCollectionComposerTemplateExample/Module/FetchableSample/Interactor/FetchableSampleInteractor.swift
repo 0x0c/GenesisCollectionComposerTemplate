@@ -2,37 +2,35 @@
 //  FetchableSampleInteractor
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/18.
+//  Created by Akira Matsuda on 2024/01/19.
 //
 
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
-protocol FetchableSampleInteractorInput: ComposedViewFetchableInteractorInput {
+protocol FetchableSampleInteractorInput: ComposedViewFetchableInteractorInput where Entity == [ListItem] {
     // MARK: Methods called from presenter
 }
 
-protocol FetchableSampleInteractorOutput: ComposedViewInteractorOutput {
+protocol FetchableSampleInteractorOutput: AnyObject {
     // MARK: Callback methods for presenter
 }
 
-final class FetchableSampleInteractor<Repository: FetchableSampleRepositoryInterface> {
-    var repository: Repository
-
+final class FetchableSampleInteractor {
     // MARK: VIPER property
     weak var presenter: (any FetchableSampleInteractorOutput)!
 
-    init(repository: Repository) {
-        self.repository = repository
-    }
+    var storage: Array<ListItem>?
+
+    init() {}
 
     // MARK: Other private methods
 }
 
 extension FetchableSampleInteractor: FetchableSampleInteractorInput {
     func fetch(force: Bool) async throws {
-        let result = try await repository.fetch(force: force)
-        await presenter.updateSections()
+        storage = [ListItem].mock()
+        sleep(3)
     }
 }

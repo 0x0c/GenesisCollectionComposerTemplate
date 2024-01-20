@@ -2,7 +2,7 @@
 //  SampleInteractor
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/18.
+//  Created by Akira Matsuda on 2024/01/19.
 //
 
 import CollectionComposer
@@ -13,12 +13,11 @@ protocol SampleInteractorInput {
     // MARK: Methods called from presenter
 }
 
-protocol SampleInteractorOutput: ComposedViewInteractorOutput {
+protocol SampleInteractorOutput: AnyObject {
     // MARK: Callback methods for presenter
 }
 
 final class SampleInteractor {
-
     // MARK: VIPER property
     weak var presenter: (any SampleInteractorOutput)!
 

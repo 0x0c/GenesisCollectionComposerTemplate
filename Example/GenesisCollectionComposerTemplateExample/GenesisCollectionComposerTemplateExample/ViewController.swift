@@ -21,6 +21,6 @@ class ViewController: UIViewController {
 
     @IBAction
     private func presentFetchableSampleModule(_ sender: Any) {
-        navigationController?.pushViewController(FetchableSampleRouter.assembleModule(repository: FetchableSampleRepository()), animated: true)
+        navigationController?.pushViewController(FetchableSampleRouter.assembleModule(), animated: true)
     }
 }

@@ -10,18 +10,17 @@ import CollectionComposerVIPERExtension
 import UIKit
 
 @MainActor
-protocol {{ module_name }}ViewInput: ComposedViewInput {
+protocol {{ module_name }}ViewInput: AnyObject {
     // MARK: Methods called from presenter
+
+    func updateSections(for state: {{ module_name }}PresenterState)
 }
 
-final class {{ module_name }}ViewController: ComposedCollectionViewController, SectionProvider {
+final class {{ module_name }}ViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     // MARK: VIPER property
     var presenter: (any {{ module_name }}PresenterInput)!
 
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = presenter
-    var sections: [any CollectionComposer.Section] {
-        return presenter.sections
-    }
+    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +29,27 @@ final class {{ module_name }}ViewController: ComposedCollectionViewController, S
     }
 
     override func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        presenter.didSelectItem(item, in: section, at: indexPath)
+        // TODO: Handler selection
     }
 
-    // MARK: Other private methods
+    func store(_ sections: [any CollectionComposer.Section]) {
+        self.sections = sections
+        updateDataSource(self.sections)
+    }
+
+    // MARK: private
+
+    private(set) var sections = [any CollectionComposer.Section]()
 }
 
 extension {{ module_name }}ViewController: {{module_name}}ViewInput {
-    func updateSections(_ sections: [any CollectionComposer.Section]) {
+    private func makeSections(for state: {{ module_name }}PresenterState) -> [any CollectionComposer.Section] {
+        // TODO: Construct sections
+        return []
+    }
+
+    func updateSections(for state: {{ module_name }}PresenterState) {
         // Do any additional setup before updating the view.
-        updateDataSource(sections)
+        store(makeSections(for: state))
     }
 }

@@ -10,34 +10,22 @@ import CollectionComposerVIPERExtension
 import Foundation
 
 {% if has_repository %}
-protocol {{ module_name }}InteractorInput: ComposedViewFetchableInteractorInput {
+protocol {{ module_name }}InteractorInput: ComposedViewFetchableInteractorInput where Entity == // TODO: Specify entity {
 {% else %}
 protocol {{ module_name }}InteractorInput {
 {% endif %}
     // MARK: Methods called from presenter
 }
 
-protocol {{ module_name }}InteractorOutput: ComposedViewInteractorOutput {
+protocol {{ module_name }}InteractorOutput: AnyObject {
     // MARK: Callback methods for presenter
 }
 
-{% if has_repository %}
-final class {{ module_name }}Interactor<Repository: {{ module_name }}RepositoryInterface> {
-    var repository: Repository
-{% else %}
 final class {{ module_name }}Interactor {
-{% endif %}
-
     // MARK: VIPER property
     weak var presenter: (any {{ module_name }}InteractorOutput)!
 
-{% if has_repository %}
-    init(repository: Repository) {
-        self.repository = repository
-    }
-{% else %}
     init() {}
-{% endif %}
 
     // MARK: Other private methods
 }
@@ -45,8 +33,7 @@ final class {{ module_name }}Interactor {
 extension {{ module_name }}Interactor: {{ module_name }}InteractorInput {
 {% if has_repository %}
     func fetch(force: Bool) async throws {
-        let result = try await repository.fetch(force: force)
-        await presenter.updateSections()
+        return // TODO: return Entity
     }
 {% endif %}
 }

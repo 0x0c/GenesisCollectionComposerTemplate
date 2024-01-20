@@ -2,7 +2,7 @@
 //  FetchableSampleViewController
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/18.
+//  Created by Akira Matsuda on 2024/01/19.
 //
 
 import CollectionComposer
@@ -10,18 +10,17 @@ import CollectionComposerVIPERExtension
 import UIKit
 
 @MainActor
-protocol FetchableSampleViewInput: ComposedViewInput {
+protocol FetchableSampleViewInput: AnyObject {
     // MARK: Methods called from presenter
+
+    func updateSections(for state: FetchableSamplePresenterState)
 }
 
-final class FetchableSampleViewController: ComposedCollectionViewController, SectionProvider {
+final class FetchableSampleViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     // MARK: VIPER property
     var presenter: (any FetchableSamplePresenterInput)!
 
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = presenter
-    var sections: [any CollectionComposer.Section] {
-        return presenter.sections
-    }
+    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +29,31 @@ final class FetchableSampleViewController: ComposedCollectionViewController, Sec
     }
 
     override func didSelectItem(_ item: AnyHashable, in section: any CollectionComposer.Section, at indexPath: IndexPath) {
-        presenter.didSelectItem(item, in: section, at: indexPath)
+        // TODO: Handler selection
     }
 
-    // MARK: Other private methods
+    func store(_ sections: [any CollectionComposer.Section]) {
+        self.sections = sections
+        updateDataSource(self.sections)
+    }
+
+    // MARK: private
+
+    private(set) var sections = [any CollectionComposer.Section]()
 }
 
 extension FetchableSampleViewController: FetchableSampleViewInput {
-    func updateSections(_ sections: [any CollectionComposer.Section]) {
+    private func makeSections(for state: FetchableSamplePresenterState) -> [any CollectionComposer.Section] {
+        switch state {
+        case .loading:
+            return [ActivityIndicatorSection()]
+        case let .fetched(items):
+            return [ListSection(items: items)]
+        }
+    }
+
+    func updateSections(for state: FetchableSamplePresenterState) {
         // Do any additional setup before updating the view.
-        updateDataSource(sections)
+        store(makeSections(for: state))
     }
 }
