@@ -2,17 +2,18 @@
 //  FetchableSamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/19.
+//  Created by Akira Matsuda on 2024/01/20.
 //
 
+import Combine
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
 enum FetchableSamplePresenterState {
-    // TODO: Add any states for view
     case loading
-    case fetched(_ items: [ListItem])
+    case fetched([ListItem])
+    case failed(Error)
 }
 
 @MainActor
@@ -30,7 +31,8 @@ final class FetchableSamplePresenter {
     var interactor: (any FetchableSampleInteractorInput)!
     var router: (any FetchableSampleRouterInput)!
 
-    @Published var isLoading = false
+    @Published private var state: FetchableSamplePresenterState = .loading
+    private var cancellable = Set<AnyCancellable>()
 
     init(view: FetchableSampleViewInput, interactor: any FetchableSampleInteractorInput, router: FetchableSampleRouterInput) {
         self.view = view
@@ -40,34 +42,31 @@ final class FetchableSamplePresenter {
 }
 
 extension FetchableSamplePresenter: FetchableSamplePresenterInput {
-    var isLoadingPublisher: Published<Bool>.Publisher {
-        return $isLoading
-    }
-
     func viewDidLoad() {
         // Do any additional setup after loading the view.
-        view.updateSections(for: makeState())
+        view.updateSections(for: state)
+        $state.sink { [weak self] newState in
+            guard let self else {
+                return
+            }
+            view.updateSections(for: newState)
+        }.store(in: &cancellable)
         fetch(force: true)
     }
 
-    private func makeState() -> FetchableSamplePresenterState {
-        guard let items = interactor.storage else {
-            return .loading
-        }
-        return .fetched(items)
-    }
-
     func fetch(force: Bool) {
-        Task { [weak view] in
-            isLoading = true
+        Task {
             do {
                 try await interactor.fetch(force: force)
+                guard let items = interactor.storage else {
+                    state = .failed(NSError(domain: "Failed to fetch", code: 0))
+                    return
+                }
+                state = .fetched(items)
             }
             catch {
-                // TODO: handle error
+                // TODO: Handle error
             }
-            view?.updateSections(for: makeState())
-            isLoading = false
         }
     }
 }

@@ -2,7 +2,7 @@
 //  SampleViewController
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/19.
+//  Created by Akira Matsuda on 2024/01/20.
 //
 
 import CollectionComposer
@@ -45,10 +45,8 @@ final class SampleViewController: ComposedCollectionViewController, SectionProvi
 extension SampleViewController: SampleViewInput {
     private func makeSections(for state: SamplePresenterState) -> [any CollectionComposer.Section] {
         switch state {
-        case let .initial(items):
-            return [ListSection {
-                for item in items { item }
-            }]
+        case .initial:
+            return [ListSection(items: [ListItem].mock())]
         }
     }
 

@@ -2,7 +2,7 @@
 //  FetchableSampleViewController
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/19.
+//  Created by Akira Matsuda on 2024/01/20.
 //
 
 import CollectionComposer
@@ -49,6 +49,8 @@ extension FetchableSampleViewController: FetchableSampleViewInput {
             return [ActivityIndicatorSection()]
         case let .fetched(items):
             return [ListSection(items: items)]
+        case .failed:
+            return [ActivityIndicatorSection()]
         }
     }
 

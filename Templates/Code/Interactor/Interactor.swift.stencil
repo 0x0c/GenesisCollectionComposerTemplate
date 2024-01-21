@@ -10,7 +10,11 @@ import CollectionComposerVIPERExtension
 import Foundation
 
 {% if has_repository %}
-protocol {{ module_name }}InteractorInput: ComposedViewFetchableInteractorInput where Entity == // TODO: Specify entity {
+struct {{ module_name }}InteractorEntity {
+    // TODO: Replace to specific entity
+}
+
+protocol {{ module_name }}InteractorInput: ComposedViewFetchableInteractorInput where Entity == {{ module_name }}InteractorEntity {
 {% else %}
 protocol {{ module_name }}InteractorInput {
 {% endif %}
@@ -24,6 +28,9 @@ protocol {{ module_name }}InteractorOutput: AnyObject {
 final class {{ module_name }}Interactor {
     // MARK: VIPER property
     weak var presenter: (any {{ module_name }}InteractorOutput)!
+{% if has_repository %}
+    var storage: {{ module_name }}InteractorEntity?
+{% endif %}
 
     init() {}
 
@@ -33,7 +40,7 @@ final class {{ module_name }}Interactor {
 extension {{ module_name }}Interactor: {{ module_name }}InteractorInput {
 {% if has_repository %}
     func fetch(force: Bool) async throws {
-        return // TODO: return Entity
+        // TODO: Fetch entities
     }
 {% endif %}
 }

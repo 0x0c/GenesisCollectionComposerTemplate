@@ -5,12 +5,14 @@
 //  Created by {{ developer_name }} on {{ date }}.
 //
 
+import Combine
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
 enum {{ module_name }}PresenterState {
     // TODO: Add any states for view
+    case initial
 }
 
 @MainActor
@@ -32,9 +34,8 @@ final class {{ module_name }}Presenter {
     var interactor: (any {{ module_name }}InteractorInput)!
     var router: (any {{ module_name }}RouterInput)!
 
-{% if has_repository %}
-    @Published var isLoading = false
-{% endif %}
+    @Published private var state: {{ module_name }}PresenterState = .initial
+    private var cancellable = Set<AnyCancellable>()
 
     init(view: {{ module_name }}ViewInput, interactor: any {{ module_name }}InteractorInput, router: {{ module_name }}RouterInput) {
         self.view = view
@@ -44,36 +45,30 @@ final class {{ module_name }}Presenter {
 }
 
 extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
-{% if has_repository %}
-    var isLoadingPublisher: Published<Bool>.Publisher {
-        return $isLoading
-    }
-
-{% endif %}
     func viewDidLoad() {
         // Do any additional setup after loading the view.
-        view.updateSections(for: makeState())
+        view.updateSections(for: state)
+        $state.sink { [weak self] newState in
+            guard let self else {
+                return
+            }
+            view.updateSections(for: newState)
+        }.store(in: &cancellable)
 {% if has_repository %}
         fetch(force: true)
 {% endif %}
     }
-
-    private func makeState() -> {{ module_name }}PresenterState {
-        // TODO: Construct context from the entity
-    }
 {% if has_repository %}
 
     func fetch(force: Bool) {
-        Task { [weak view] in
-            isLoading = true
+        Task {
             do {
                 try await interactor.fetch(force: force)
+                // TODO: Update state
             }
             catch {
-                // TODO: handle error
+                // TODO: Handle error
             }
-            view?.updateSections(for: makeState())
-            isLoading = false
         }
     }
 {% endif %}

@@ -2,15 +2,17 @@
 //  SamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/19.
+//  Created by Akira Matsuda on 2024/01/20.
 //
 
+import Combine
 import CollectionComposer
 import CollectionComposerVIPERExtension
 import Foundation
 
 enum SamplePresenterState {
-    case initial(_ items: [ListItem])
+    // TODO: Add any states for view
+    case initial
 }
 
 @MainActor
@@ -28,6 +30,8 @@ final class SamplePresenter {
     var interactor: (any SampleInteractorInput)!
     var router: (any SampleRouterInput)!
 
+    @Published private var state: SamplePresenterState = .initial
+    private var cancellable = Set<AnyCancellable>()
 
     init(view: SampleViewInput, interactor: any SampleInteractorInput, router: SampleRouterInput) {
         self.view = view
@@ -39,11 +43,13 @@ final class SamplePresenter {
 extension SamplePresenter: SamplePresenterInput {
     func viewDidLoad() {
         // Do any additional setup after loading the view.
-        view.updateSections(for: makeState())
-    }
-
-    private func makeState() -> SamplePresenterState {
-        return .initial([ListItem].mock())
+        view.updateSections(for: state)
+        $state.sink { [weak self] newState in
+            guard let self else {
+                return
+            }
+            view.updateSections(for: newState)
+        }.store(in: &cancellable)
     }
 }
 
