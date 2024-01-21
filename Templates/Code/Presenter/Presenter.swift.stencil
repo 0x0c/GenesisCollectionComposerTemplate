@@ -5,9 +5,9 @@
 //  Created by {{ developer_name }} on {{ date }}.
 //
 
-import Combine
 import CollectionComposer
 import CollectionComposerVIPERExtension
+import Combine
 import Foundation
 
 enum {{ module_name }}PresenterState {
