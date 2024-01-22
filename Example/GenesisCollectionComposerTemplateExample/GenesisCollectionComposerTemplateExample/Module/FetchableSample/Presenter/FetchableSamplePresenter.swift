@@ -58,14 +58,14 @@ extension FetchableSamplePresenter: FetchableSamplePresenterInput {
     }
 
     func fetch() {
-        Task.detached { [weak self] in
-            self?.state = .loading
-            self?.interactor.fetch()
-            guard let items = self?.interactor.storage else {
-                self?.state = .failed(NSError(domain: "Failed to fetch", code: 0))
+        Task {
+            state = .loading
+            await interactor.fetch()
+            guard let items = interactor.storage else {
+                state = .failed(NSError(domain: "Failed to fetch", code: 0))
                 return
             }
-            self?.state = .fetched(items)
+            state = .fetched(items)
         }
     }
 }

@@ -12,7 +12,7 @@ import Foundation
 protocol FetchableSampleInteractorInput: ComposedViewFetchableInteractorInput where Entity == [ListItem] {
     // MARK: Methods called from presenter
     
-    func fetch()
+    func fetch() async
 }
 
 protocol FetchableSampleInteractorOutput: AnyObject {
@@ -30,7 +30,7 @@ final class FetchableSampleInteractor {
 }
 
 extension FetchableSampleInteractor: FetchableSampleInteractorInput {
-    func fetch() {
+    func fetch() async {
         storage = [ListItem].mock()
         sleep(3)
     }
