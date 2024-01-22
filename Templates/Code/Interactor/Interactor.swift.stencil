@@ -37,10 +37,4 @@ final class {{ module_name }}Interactor {
     // MARK: Other private methods
 }
 
-extension {{ module_name }}Interactor: {{ module_name }}InteractorInput {
-{% if has_repository %}
-    func fetch(force: Bool) async throws {
-        // TODO: Fetch entities
-    }
-{% endif %}
-}
+extension {{ module_name }}Interactor: {{ module_name }}InteractorInput {}

@@ -2,7 +2,7 @@
 //  FetchableSampleInteractor
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/20.
+//  Created by Akira Matsuda on 2024/01/22.
 //
 
 import CollectionComposer
@@ -11,6 +11,8 @@ import Foundation
 
 protocol FetchableSampleInteractorInput: ComposedViewFetchableInteractorInput where Entity == [ListItem] {
     // MARK: Methods called from presenter
+    
+    func fetch()
 }
 
 protocol FetchableSampleInteractorOutput: AnyObject {
@@ -28,7 +30,7 @@ final class FetchableSampleInteractor {
 }
 
 extension FetchableSampleInteractor: FetchableSampleInteractorInput {
-    func fetch(force: Bool) async throws {
+    func fetch() {
         storage = [ListItem].mock()
         sleep(3)
     }

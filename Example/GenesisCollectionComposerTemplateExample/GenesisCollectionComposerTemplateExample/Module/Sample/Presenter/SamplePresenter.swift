@@ -2,12 +2,12 @@
 //  SamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/20.
+//  Created by Akira Matsuda on 2024/01/22.
 //
 
-import Combine
 import CollectionComposer
 import CollectionComposerVIPERExtension
+import Combine
 import Foundation
 
 enum SamplePresenterState {
@@ -44,12 +44,14 @@ extension SamplePresenter: SamplePresenterInput {
     func viewDidLoad() {
         // Do any additional setup after loading the view.
         view.updateSections(for: state)
-        $state.sink { [weak self] newState in
-            guard let self else {
-                return
-            }
-            view.updateSections(for: newState)
-        }.store(in: &cancellable)
+        $state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newState in
+                guard let self else {
+                    return
+                }
+                view.updateSections(for: newState)
+            }.store(in: &cancellable)
     }
 }
 

@@ -2,22 +2,23 @@
 //  FetchableSamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/20.
+//  Created by Akira Matsuda on 2024/01/22.
 //
 
-import Combine
 import CollectionComposer
 import CollectionComposerVIPERExtension
+import Combine
 import Foundation
 
 enum FetchableSamplePresenterState {
+    case initial
     case loading
     case fetched([ListItem])
     case failed(Error)
 }
 
 @MainActor
-protocol FetchableSamplePresenterInput: ComposedViewFetchablePresenterInput {
+protocol FetchableSamplePresenterInput {
     // MARK: View Life-Cycle methods
 
     func viewDidLoad()
@@ -31,7 +32,7 @@ final class FetchableSamplePresenter {
     var interactor: (any FetchableSampleInteractorInput)!
     var router: (any FetchableSampleRouterInput)!
 
-    @Published private var state: FetchableSamplePresenterState = .loading
+    @Published private var state: FetchableSamplePresenterState = .initial
     private var cancellable = Set<AnyCancellable>()
 
     init(view: FetchableSampleViewInput, interactor: any FetchableSampleInteractorInput, router: FetchableSampleRouterInput) {
@@ -45,28 +46,26 @@ extension FetchableSamplePresenter: FetchableSamplePresenterInput {
     func viewDidLoad() {
         // Do any additional setup after loading the view.
         view.updateSections(for: state)
-        $state.sink { [weak self] newState in
-            guard let self else {
-                return
-            }
-            view.updateSections(for: newState)
-        }.store(in: &cancellable)
-        fetch(force: true)
-    }
-
-    func fetch(force: Bool) {
-        Task {
-            do {
-                try await interactor.fetch(force: force)
-                guard let items = interactor.storage else {
-                    state = .failed(NSError(domain: "Failed to fetch", code: 0))
+        $state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newState in
+                guard let self else {
                     return
                 }
-                state = .fetched(items)
+                view.updateSections(for: newState)
+            }.store(in: &cancellable)
+        fetch()
+    }
+
+    func fetch() {
+        Task.detached { [weak self] in
+            self?.state = .loading
+            self?.interactor.fetch()
+            guard let items = self?.interactor.storage else {
+                self?.state = .failed(NSError(domain: "Failed to fetch", code: 0))
+                return
             }
-            catch {
-                // TODO: Handle error
-            }
+            self?.state = .fetched(items)
         }
     }
 }

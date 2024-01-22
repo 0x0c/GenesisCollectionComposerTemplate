@@ -2,7 +2,7 @@
 //  FetchableSampleViewController
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/20.
+//  Created by Akira Matsuda on 2024/01/22.
 //
 
 import CollectionComposer
@@ -45,7 +45,7 @@ final class FetchableSampleViewController: ComposedCollectionViewController, Sec
 extension FetchableSampleViewController: FetchableSampleViewInput {
     private func makeSections(for state: FetchableSamplePresenterState) -> [any CollectionComposer.Section] {
         switch state {
-        case .loading:
+        case .initial, .loading:
             return [ActivityIndicatorSection()]
         case let .fetched(items):
             return [ListSection(items: items)]
@@ -53,6 +53,7 @@ extension FetchableSampleViewController: FetchableSampleViewInput {
             return [ActivityIndicatorSection()]
         }
     }
+
 
     func updateSections(for state: FetchableSamplePresenterState) {
         // Do any additional setup before updating the view.

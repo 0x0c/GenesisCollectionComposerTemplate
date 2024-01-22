@@ -2,7 +2,7 @@
 //  SampleInteractor
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/20.
+//  Created by Akira Matsuda on 2024/01/22.
 //
 
 import CollectionComposer
@@ -26,5 +26,4 @@ final class SampleInteractor {
     // MARK: Other private methods
 }
 
-extension SampleInteractor: SampleInteractorInput {
-}
+extension SampleInteractor: SampleInteractorInput {}
