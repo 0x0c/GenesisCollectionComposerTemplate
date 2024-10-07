@@ -53,9 +53,6 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
                 }
                 view.updateSections(for: newState)
             }.store(in: &cancellable)
-{% if has_repository %}
-        // TODO: Fetch data from interactor
-{% endif %}
     }
 }
 
