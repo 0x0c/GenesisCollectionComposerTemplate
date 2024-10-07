@@ -20,7 +20,7 @@ final class {{ module_name }}ViewController: ComposedCollectionViewController, S
     // MARK: VIPER property
     var presenter: (any {{ module_name }}PresenterInput)!
 
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
+    var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     override func viewDidLoad() {
         super.viewDidLoad()

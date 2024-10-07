@@ -9,18 +9,6 @@
 import XCTest
 
 class FetchableSamplePresenterTest: XCTestCase {
-    class MockInteractor: FetchableSampleInteractorInput {
-        var sections = [any CollectionComposer.Section]()
-    }
-
-    class MockRouter: FetchableSampleRouterInput {}
-
-    class MockViewController: FetchableSampleViewInput {
-        func setupInitialState() {}
-
-        func update(sections: [any CollectionComposer.Section]) {}
-    }
-
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -29,5 +17,23 @@ class FetchableSamplePresenterTest: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+    }
+
+    class MockInteractor: FetchableSampleInteractorInput {
+        var sections = [any CollectionComposer.Section]()
+    }
+
+    class MockRouter: FetchableSampleRouterInput {
+
+    }
+
+    class MockViewController: FetchableSampleViewInput {
+        func setupInitialState() {
+
+        }
+
+        func update(sections: [any CollectionComposer.Section]) {
+            
+        }
     }
 }

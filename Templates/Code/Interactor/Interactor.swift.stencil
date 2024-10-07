@@ -6,18 +6,9 @@
 //
 
 import CollectionComposer
-import CollectionComposerVIPERExtension
 import Foundation
 
-{% if has_repository %}
-struct {{ module_name }}InteractorEntity {
-    // TODO: Replace to specific entity
-}
-
-protocol {{ module_name }}InteractorInput: ComposedViewFetchableInteractorInput where Entity == {{ module_name }}InteractorEntity {
-{% else %}
 protocol {{ module_name }}InteractorInput {
-{% endif %}
     // MARK: Methods called from presenter
 }
 
@@ -25,13 +16,7 @@ protocol {{ module_name }}InteractorOutput: AnyObject {
     // MARK: Callback methods for presenter
 }
 
-final class {{ module_name }}Interactor {
-    // MARK: VIPER property
-    weak var presenter: (any {{ module_name }}InteractorOutput)!
-{% if has_repository %}
-    private(set) var storage: {{ module_name }}InteractorEntity?
-{% endif %}
-
+actor {{ module_name }}Interactor {
     init() {}
 
     // MARK: Other private methods

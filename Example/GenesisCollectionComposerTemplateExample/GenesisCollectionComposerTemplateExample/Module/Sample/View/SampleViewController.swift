@@ -9,8 +9,6 @@ import CollectionComposer
 import CollectionComposerVIPERExtension
 import UIKit
 
-// MARK: - SampleViewInput
-
 @MainActor
 protocol SampleViewInput: AnyObject {
     // MARK: Methods called from presenter
@@ -18,16 +16,11 @@ protocol SampleViewInput: AnyObject {
     func updateSections(for state: SamplePresenterState)
 }
 
-// MARK: - SampleViewController
-
 final class SampleViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     // MARK: VIPER property
-
     var presenter: (any SamplePresenterInput)!
 
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
-
-    private(set) var sections = [any CollectionComposer.Section]()
+    var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +36,11 @@ final class SampleViewController: ComposedCollectionViewController, SectionProvi
         self.sections = sections
         updateDataSource(self.sections)
     }
-}
 
-// MARK: SampleViewInput
+    // MARK: private
+
+    private(set) var sections = [any CollectionComposer.Section]()
+}
 
 extension SampleViewController: SampleViewInput {
     private func makeSections(for state: SamplePresenterState) -> [any CollectionComposer.Section] {

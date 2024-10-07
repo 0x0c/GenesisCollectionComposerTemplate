@@ -9,8 +9,6 @@ import CollectionComposer
 import CollectionComposerVIPERExtension
 import UIKit
 
-// MARK: - FetchableSampleViewInput
-
 @MainActor
 protocol FetchableSampleViewInput: AnyObject {
     // MARK: Methods called from presenter
@@ -18,16 +16,11 @@ protocol FetchableSampleViewInput: AnyObject {
     func updateSections(for state: FetchableSamplePresenterState)
 }
 
-// MARK: - FetchableSampleViewController
-
 final class FetchableSampleViewController: ComposedCollectionViewController, SectionProvider, SectionDataSource {
     // MARK: VIPER property
-
     var presenter: (any FetchableSamplePresenterInput)!
 
-    lazy var sectionDataSource: CollectionComposer.SectionDataSource = self
-
-    private(set) var sections = [any CollectionComposer.Section]()
+    var sectionDataSource: CollectionComposer.SectionDataSource { self }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +36,11 @@ final class FetchableSampleViewController: ComposedCollectionViewController, Sec
         self.sections = sections
         updateDataSource(self.sections)
     }
-}
 
-// MARK: FetchableSampleViewInput
+    // MARK: private
+
+    private(set) var sections = [any CollectionComposer.Section]()
+}
 
 extension FetchableSampleViewController: FetchableSampleViewInput {
     private func makeSections(for state: FetchableSamplePresenterState) -> [any CollectionComposer.Section] {

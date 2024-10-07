@@ -7,24 +7,18 @@
 
 import UIKit
 
-// MARK: - FetchableSampleRouterInput
-
 @MainActor
 protocol FetchableSampleRouterInput: AnyObject {
     // MARK: View transitions
 }
 
-// MARK: - FetchableSampleRouter
-
 @MainActor
 final class FetchableSampleRouter {
-    // MARK: Lifecycle
+    private unowned let viewController: FetchableSampleViewController
 
     init(viewController: FetchableSampleViewController) {
         self.viewController = viewController
     }
-
-    // MARK: Internal
 
     static func assembleModule() -> FetchableSampleViewController {
         let view = FetchableSampleViewController()
@@ -38,16 +32,9 @@ final class FetchableSampleRouter {
         let presenter = FetchableSamplePresenter(view: view, interactor: interactor, router: router)
 
         view.presenter = presenter
-        interactor.presenter = presenter
 
         return view
     }
-
-    // MARK: Private
-
-    private unowned let viewController: FetchableSampleViewController
 }
-
-// MARK: FetchableSampleRouterInput
 
 extension FetchableSampleRouter: FetchableSampleRouterInput {}

@@ -7,24 +7,18 @@
 
 import UIKit
 
-// MARK: - SampleRouterInput
-
 @MainActor
 protocol SampleRouterInput: AnyObject {
     // MARK: View transitions
 }
 
-// MARK: - SampleRouter
-
 @MainActor
 final class SampleRouter {
-    // MARK: Lifecycle
+    private unowned let viewController: SampleViewController
 
     init(viewController: SampleViewController) {
         self.viewController = viewController
     }
-
-    // MARK: Internal
 
     static func assembleModule() -> SampleViewController {
         let view = SampleViewController()
@@ -38,16 +32,9 @@ final class SampleRouter {
         let presenter = SamplePresenter(view: view, interactor: interactor, router: router)
 
         view.presenter = presenter
-        interactor.presenter = presenter
 
         return view
     }
-
-    // MARK: Private
-
-    private unowned let viewController: SampleViewController
 }
-
-// MARK: SampleRouterInput
 
 extension SampleRouter: SampleRouterInput {}
