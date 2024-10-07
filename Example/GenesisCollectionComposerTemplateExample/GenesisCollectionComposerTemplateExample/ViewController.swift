@@ -8,11 +8,14 @@
 import UIKit
 
 class ViewController: UIViewController {
+    // MARK: Internal
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+
+    // MARK: Private
 
     @IBAction
     private func presentSampleModule(_ sender: Any) {

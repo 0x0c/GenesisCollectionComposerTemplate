@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Array<ListItem> {
+extension [ListItem] {
     static func mock() -> [ListItem] {
         return [
             ListItem(text: "item 1"),

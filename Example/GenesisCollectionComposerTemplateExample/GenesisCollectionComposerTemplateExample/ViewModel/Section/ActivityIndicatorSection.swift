@@ -10,25 +10,6 @@ import Foundation
 import UIKit
 
 class ActivityIndicatorSection: Section {
-    var footer: (any CollectionComposer.BoundarySupplementaryFooterView)?
-    
-    var header: (any CollectionComposer.BoundarySupplementaryHeaderView)?
-    var decorations: [CollectionComposer.Decoration] = []
-    func storeHeader(_ header: (any CollectionComposer.BoundarySupplementaryHeaderView)?) {
-        self.header = header
-    }
-    
-    func storeFooter(_ footer: (any CollectionComposer.BoundarySupplementaryFooterView)?) {
-        self.footer = footer
-    }
-    
-    func decorations(_ decorations: [CollectionComposer.Decoration]) -> Self {
-        self.decorations = decorations
-        return self
-    }
-    
-    var id: String
-
     // MARK: Lifecycle
 
     init(id: String = UUID().uuidString, indicator: IndicatorContent = .init()) {
@@ -117,6 +98,13 @@ class ActivityIndicatorSection: Section {
     typealias Cell = ActivityIndicatorCell
     typealias Item = IndicatorContent
 
+    var footer: (any CollectionComposer.BoundarySupplementaryFooterView)?
+
+    var header: (any CollectionComposer.BoundarySupplementaryHeaderView)?
+    var decorations: [CollectionComposer.Decoration] = []
+
+    var id: String
+
     var cellRegistration: UICollectionView.CellRegistration<
         ActivityIndicatorCell,
         IndicatorContent
@@ -131,6 +119,19 @@ class ActivityIndicatorSection: Section {
 
     var snapshotItems: [AnyHashable] {
         return items.map { AnyHashable($0) }
+    }
+
+    func storeHeader(_ header: (any CollectionComposer.BoundarySupplementaryHeaderView)?) {
+        self.header = header
+    }
+
+    func storeFooter(_ footer: (any CollectionComposer.BoundarySupplementaryFooterView)?) {
+        self.footer = footer
+    }
+
+    func decorations(_ decorations: [CollectionComposer.Decoration]) -> Self {
+        self.decorations = decorations
+        return self
     }
 
     func layoutSection(for environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
