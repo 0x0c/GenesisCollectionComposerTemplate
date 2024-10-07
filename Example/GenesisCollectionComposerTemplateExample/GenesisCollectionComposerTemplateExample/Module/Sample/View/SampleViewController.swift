@@ -6,7 +6,6 @@
 //
 
 import CollectionComposer
-import CollectionComposerVIPERExtension
 import UIKit
 
 // MARK: - SampleViewInput

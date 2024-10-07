@@ -1,22 +1,13 @@
 {
-  "originHash" : "817b8341378798c82dec8d054177e0007a668852b757cc65cb6b48dfaf7d2c20",
+  "originHash" : "d1ea212a91cd087e5815efa99348fcb04b3a1c89ab119eb310f24d684c09ea3e",
   "pins" : [
     {
       "identity" : "collectioncomposer",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/0x0c/CollectionComposer.git",
+      "location" : "https://github.com/0x0c/CollectionComposer",
       "state" : {
         "branch" : "main",
         "revision" : "257cb5177ea5de3772ba3e4450826c9cf5444abd"
-      }
-    },
-    {
-      "identity" : "collectioncomposerviperextension",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/0x0c/CollectionComposerVIPERExtension",
-      "state" : {
-        "branch" : "always_main",
-        "revision" : "982d1ba2ca9d8eadc290adaa91f5b3f95cdc6a41"
       }
     }
   ],

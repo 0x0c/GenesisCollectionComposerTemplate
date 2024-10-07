@@ -6,7 +6,6 @@
 //
 
 import CollectionComposer
-import CollectionComposerVIPERExtension
 import Combine
 import Foundation
 
