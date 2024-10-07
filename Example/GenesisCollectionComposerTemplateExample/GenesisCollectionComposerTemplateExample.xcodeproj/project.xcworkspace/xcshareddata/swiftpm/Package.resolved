@@ -1,12 +1,13 @@
 {
+  "originHash" : "817b8341378798c82dec8d054177e0007a668852b757cc65cb6b48dfaf7d2c20",
   "pins" : [
     {
       "identity" : "collectioncomposer",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/0x0c/CollectionComposer.git",
       "state" : {
-        "revision" : "032948a0d12fb487ca9c1620ab2bf73e8f912d43",
-        "version" : "1.2.0"
+        "branch" : "main",
+        "revision" : "257cb5177ea5de3772ba3e4450826c9cf5444abd"
       }
     },
     {
@@ -14,10 +15,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/0x0c/CollectionComposerVIPERExtension",
       "state" : {
-        "branch" : "main",
-        "revision" : "133cfc926aacf5465225169dd67b7fe377a4fc27"
+        "branch" : "always_main",
+        "revision" : "982d1ba2ca9d8eadc290adaa91f5b3f95cdc6a41"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

@@ -10,6 +10,23 @@ import Foundation
 import UIKit
 
 class ActivityIndicatorSection: Section {
+    var footer: (any CollectionComposer.BoundarySupplementaryFooterView)?
+    
+    var header: (any CollectionComposer.BoundarySupplementaryHeaderView)?
+    var decorations: [CollectionComposer.Decoration] = []
+    func storeHeader(_ header: (any CollectionComposer.BoundarySupplementaryHeaderView)?) {
+        self.header = header
+    }
+    
+    func storeFooter(_ footer: (any CollectionComposer.BoundarySupplementaryFooterView)?) {
+        self.footer = footer
+    }
+    
+    func decorations(_ decorations: [CollectionComposer.Decoration]) -> Self {
+        self.decorations = decorations
+        return self
+    }
+    
     var id: String
 
     // MARK: Lifecycle

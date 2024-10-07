@@ -2,7 +2,7 @@
 //  SamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/22.
+//  Created by Akira Matsuda on 2024/10/07.
 //
 
 import CollectionComposer
@@ -24,6 +24,7 @@ protocol SamplePresenterInput {
     // MARK: Other methods called from View
 }
 
+@MainActor
 final class SamplePresenter {
     // MARK: VIPER properties
     weak var view: (any SampleViewInput)!
@@ -52,6 +53,7 @@ extension SamplePresenter: SamplePresenterInput {
                 }
                 view.updateSections(for: newState)
             }.store(in: &cancellable)
+        // TODO: Fetch data from interactor
     }
 }
 

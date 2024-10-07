@@ -541,7 +541,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/0x0c/CollectionComposerVIPERExtension";
 			requirement = {
-				branch = main;
+				branch = always_main;
 				kind = branch;
 			};
 		};

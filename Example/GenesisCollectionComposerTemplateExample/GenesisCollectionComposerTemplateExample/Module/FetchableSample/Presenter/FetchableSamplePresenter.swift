@@ -2,7 +2,7 @@
 //  FetchableSamplePresenter
 //  GenesisCollectionComposerTemplateExample
 //
-//  Created by Akira Matsuda on 2024/01/22.
+//  Created by Akira Matsuda on 2024/10/07.
 //
 
 import CollectionComposer
@@ -11,10 +11,8 @@ import Combine
 import Foundation
 
 enum FetchableSamplePresenterState {
+    // TODO: Add any states for view
     case initial
-    case loading
-    case fetched([ListItem])
-    case failed(Error)
 }
 
 @MainActor
@@ -26,6 +24,7 @@ protocol FetchableSamplePresenterInput {
     // MARK: Other methods called from View
 }
 
+@MainActor
 final class FetchableSamplePresenter {
     // MARK: VIPER properties
     weak var view: (any FetchableSampleViewInput)!
@@ -54,19 +53,7 @@ extension FetchableSamplePresenter: FetchableSamplePresenterInput {
                 }
                 view.updateSections(for: newState)
             }.store(in: &cancellable)
-        fetch()
-    }
-
-    func fetch() {
-        Task {
-            state = .loading
-            await interactor.fetch()
-            guard let items = interactor.storage else {
-                state = .failed(NSError(domain: "Failed to fetch", code: 0))
-                return
-            }
-            state = .fetched(items)
-        }
+        // TODO: Fetch data from interactor
     }
 }
 
