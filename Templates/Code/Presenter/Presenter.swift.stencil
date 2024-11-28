@@ -45,7 +45,6 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
         // Do any additional setup after loading the view.
         view.updateSections(for: state)
         $state
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] newState in
                 guard let self else {
                     return
