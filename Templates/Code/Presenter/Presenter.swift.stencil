@@ -54,4 +54,3 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterInput {
     }
 }
 
-extension {{ module_name }}Presenter: {{ module_name }}InteractorOutput {}
